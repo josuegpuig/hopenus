@@ -1,25 +1,18 @@
 <template>
   <div id="app">
     <Navbar />
-    <img alt="Vue logo" src="./assets/logo.png">
-    <p>{{ $t('message') }}</p>
-    <FacebookLogin />
-    <NewsCard />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import Navbar from './components/Navbar'
 //import HelloWorld from './components/HelloWorld.vue'
-import FacebookLogin from './components/FacebookLogin'
-import NewsCard from './components/NewsCard'
 
 export default {
   name: 'App',
   components: {
-    FacebookLogin,
     Navbar,
-    NewsCard
   }
 }
 </script>

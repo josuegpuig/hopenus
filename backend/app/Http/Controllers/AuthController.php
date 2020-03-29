@@ -112,6 +112,23 @@ class AuthController extends Controller
         return $response;
     }
 
+    public function user()
+    {
+        $user = auth()->user();
+        return response()->json(['status' => 'success',  'user' => $user], 200);
+    }
+
+    /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh(Request $request)
+    {
+        $new_token = auth()->refresh();
+        return $this->respondWithToken($new_token);
+    }
+
     /**
      * Get the token array structure.
      *

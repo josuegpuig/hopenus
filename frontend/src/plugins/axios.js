@@ -19,6 +19,8 @@ const _axios = axios.create(config);
 _axios.interceptors.request.use(
   function(config) {
     // Do something before request is sent
+    let token = JSON.parse(localStorage.getItem('token')).access_token;
+    config.headers.authorization = `Bearer ${token}`;
     return config;
   },
   function(error) {
@@ -35,6 +37,31 @@ _axios.interceptors.response.use(
   },
   function(error) {
     // Do something with response error
+    if (error.response.status === 400 && error.response.data.error == 'Unauthorized') {
+      let token = JSON.parse(localStorage.getItem('token'));
+      let expiration = token.expiration;
+
+      if (new Date(expiration) < new Date()) {
+        return new Promise(function (resolve, reject) {
+          _axios.get('http://localhost:8000/api/auth/refresh').then(response => {
+            console.log(response);
+            let token = response.data;
+            let expiration = new Date();
+            expiration.setSeconds(expiration.getSeconds() + token.expires_in);
+            let token_data = {
+              access_token: token.access_token,
+              expiration: expiration
+            }
+            localStorage.setItem('token', JSON.stringify(token_data));
+            error.config.headers.authorization = `Bearer ${token_data.access_token}`;
+            resolve(_axios(error.config));
+          }).catch(err => {
+            reject(err);
+          })
+        });
+        
+      }
+    }
     return Promise.reject(error);
   }
 );

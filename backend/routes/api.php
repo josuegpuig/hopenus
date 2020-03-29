@@ -37,3 +37,17 @@ Route::prefix('auth')->group(function () {
 Route::prefix('crawler')->group(function () {
     Route::get('consult', 'CrawlerController@consult');
 });
+
+Route::prefix('post')->group(function () {
+    // Route::post('register', 'UserController@register');
+    // Below mention routes are available only for the authenticated users.
+    Route::middleware('auth:api')->group(function () {
+        // Create New User
+        Route::post('create_post', 'PostController@create');
+        Route::post('post_category', 'PostController@postByCategory');
+        Route::post('post_details', 'PostController@show');
+        // Get user info
+        Route::post('create_comment', 'CommentController@create');
+        Route::post('comments_post', 'CommentController@commentByPost');
+    });
+});

@@ -19,7 +19,6 @@ class CrawlerController extends Controller
         //dd($crawler);
         $crawler->filter('div#top_nav')->each(function ($node) {
             print $node->text()."\n";
-            dd($node);
             array_push($nodes, $node);
         });
         return response()->json(['status' => 'success', 'information' => $nodes, 'crawler' => $crawler], 200);
