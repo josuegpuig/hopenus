@@ -16,14 +16,30 @@ let config = {
 
 const _axios = axios.create(config);
 
+// for multiple requests
+let isRefreshing = false;
+let failedQueue = [];
+
+const processQueue = (error, token = null) => {
+  failedQueue.forEach(prom => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  })
+
+  failedQueue = [];
+}
+
 _axios.interceptors.request.use(
-  function(config) {
+  function (config) {
     // Do something before request is sent
     let token = JSON.parse(localStorage.getItem('token')).access_token;
     config.headers.authorization = `Bearer ${token}`;
     return config;
   },
-  function(error) {
+  function (error) {
     // Do something with request error
     return Promise.reject(error);
   }
@@ -31,13 +47,29 @@ _axios.interceptors.request.use(
 
 // Add a response interceptor
 _axios.interceptors.response.use(
-  function(response) {
+  function (response) {
     // Do something with response data
     return response;
   },
-  function(error) {
+  function (error) {
     // Do something with response error
-    if (error.response.status === 400 && error.response.data.error == 'Unauthorized') {
+    const originalRequest = error.config;
+
+    if (error.response.status === 400 && error.response.data.error == 'Unauthorized' && !originalRequest._retry) {
+      if (isRefreshing) {
+        return new Promise(function (resolve, reject) {
+          failedQueue.push({ resolve, reject })
+        }).then(token => {
+          originalRequest.headers['Authorization'] = 'Bearer ' + token;
+          return _axios(originalRequest);
+        }).catch(err => {
+          return Promise.reject(err);
+        })
+      }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
       let token = JSON.parse(localStorage.getItem('token'));
       let expiration = token.expiration;
 
@@ -54,19 +86,21 @@ _axios.interceptors.response.use(
             }
             localStorage.setItem('token', JSON.stringify(token_data));
             error.config.headers.authorization = `Bearer ${token_data.access_token}`;
+            processQueue(null, token_data.access_token);
             resolve(_axios(error.config));
           }).catch(err => {
             reject(err);
           })
-        });
-        
+        })
+        .then(() => { isRefreshing = false });
+
       }
     }
     return Promise.reject(error);
   }
 );
 
-Plugin.install = function(Vue) {
+Plugin.install = function (Vue) {
   Vue.axios = _axios;
   window.axios = _axios;
   Object.defineProperties(Vue.prototype, {

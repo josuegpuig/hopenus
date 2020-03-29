@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="#">Hopenus</b-navbar-brand>
+      <router-link :to="{ name: 'Home' }" class="navbar-brand">Hopenus</router-link>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 

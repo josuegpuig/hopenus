@@ -36,8 +36,8 @@
             <b-avatar variant="info" :src="actual_user.picture"></b-avatar>
           </b-col>
           <b-col cols="9">
-            <b-form-textarea id="textarea-small" size="sm" placeholder="Comment something"></b-form-textarea>
-            <b-button type="button">Publish</b-button>
+            <b-form-textarea v-model="user_comment" size="sm" placeholder="Comment something"></b-form-textarea>
+            <b-button type="button" @click="handlePublish">Publish</b-button>
           </b-col>
         </b-row>
       </b-container>
@@ -53,8 +53,31 @@ export default {
         user_information: {}
       },
       comments: [],
-      actual_user: {}
+      actual_user: {},
+      user_comment: '',
     };
+  },
+  methods: {
+    handlePublish() {
+      let params = this.$route.params;
+      this.$axios
+      .post("http://localhost:8000/api/post/create_comment", {
+        post_id: params.id,
+        body: this.user_comment
+      })
+      .then(res => {
+        console.log(res.data);
+        this.comments = [...this.comments, {
+          body: this.user_comment,
+          user_information: {
+            first_name: this.actual_user.first_name,
+            last_name: this.actual_user.last_name,
+            picture: this.actual_user.picture
+          }
+        }]
+        this.user_comment = '';
+      });
+    }
   },
   beforeMount() {
     let params = this.$route.params;

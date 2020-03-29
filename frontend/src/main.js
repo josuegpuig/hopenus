@@ -6,6 +6,7 @@ import './scss/main.scss'
 import { NavbarPlugin, FormInputPlugin, ButtonPlugin, CardPlugin, LayoutPlugin, LinkPlugin, ImagePlugin, AvatarPlugin, FormGroupPlugin, FormTextareaPlugin } from 'bootstrap-vue'
 import i18n from './i18n'
 import router from './router'
+import store from './store'
 
 Vue.config.productionTip = false
 
@@ -23,5 +24,6 @@ Vue.use(FormTextareaPlugin);
 new Vue({
   i18n,
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')
