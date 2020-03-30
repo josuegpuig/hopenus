@@ -3,7 +3,7 @@
     <Loading v-if="!loaded" />
     <b-card v-for="(post,i) in posts" :key="i">
       <div>
-        <b-avatar variant="info" src="https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=10220805271617620&height=200&width=200&ext=1588054727&hash=AeQIJ8fSR82bB9ab"></b-avatar>
+        <b-avatar variant="info" :src="post.user_information.picture"></b-avatar>
         {{ post.user_information.first_name }} {{ post.user_information.last_name }}
       </div>
       

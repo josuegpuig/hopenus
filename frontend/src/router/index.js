@@ -13,7 +13,7 @@ const routes = [
     name: 'Home',
     component: Home,
     children: [
-      { path: '', component: NewsCard },
+      { path: '', name: 'HomeNews', component: NewsCard },
       { path: 'posts', component: () => import(/* webpackChunkName: "posts" */ '../components/Post.vue') },
     ]
   },

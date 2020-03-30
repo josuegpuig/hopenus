@@ -115,6 +115,9 @@ class PostController extends Controller
             'picture'  => $post->user->picture,
         ];
         $post->user_information = $user_information;
+        $comments_count = $post->comments->count();
+        $post->comments_count = $comments_count;
+        unset($post->user);
         unset($post->user);
         return response()->json(['status' => 'success', 'post' =>  $post], 200);
     }

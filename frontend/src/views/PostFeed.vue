@@ -4,21 +4,21 @@
       <div>
         <b-avatar
           variant="info"
-          src="https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=10220805271617620&height=200&width=200&ext=1588054727&hash=AeQIJ8fSR82bB9ab"
+          :src="post.user_information.picture"
         ></b-avatar>
         {{ post.user_information.first_name }} {{ post.user_information.last_name }}
       </div>
 
       <b-card-text>{{ post.body }}</b-card-text>
 
-      <b-link href="#" class="card-link">4 Comentarios</b-link>
+      <b-link href="#" class="card-link">{{ post.comments_count }} Comentarios</b-link>
     </b-card>
     <b-card v-for="(comment,i) in comments" :key="i">
       <b-row>
         <b-col>
           <b-avatar
             variant="info"
-            src="https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=10220805271617620&height=200&width=200&ext=1588054727&hash=AeQIJ8fSR82bB9ab"
+            :src="comment.user_information.picture"
           ></b-avatar>
         </b-col>
 

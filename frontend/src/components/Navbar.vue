@@ -1,13 +1,13 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <router-link :to="{ name: 'Home' }" class="navbar-brand">Hopenus</router-link>
+      <router-link :to="{ name: 'HomeNews' }" class="navbar-brand">Hopenus</router-link>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item href="#">Link</b-nav-item>
+          <b-nav-item><router-link :to="{ name: 'Feed' }" class="nav-link">Posts</router-link></b-nav-item>
           <b-nav-item href="#" disabled>Disabled</b-nav-item>
         </b-navbar-nav>
 

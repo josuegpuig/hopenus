@@ -40,6 +40,7 @@ export default {
   methods: {
     changeCategory(newCategory) {
       this.category = newCategory;
+      this.new_posts = [];
     },
     handlePublish() {
       this.$axios

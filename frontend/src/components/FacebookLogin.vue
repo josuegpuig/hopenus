@@ -1,9 +1,9 @@
 <template>
   <div>
     <v-facebook-login app-id="223948805642359" v-model="model_login" @sdk-init="handleSdkInit" @login="handleLogin"/>
-    <button v-if="scope.logout && model_login.connected" @click="scope.logout">
+    <!-- <button v-if="scope.logout && model_login.connected" @click="scope.logout">
       Logout
-    </button>
+    </button> -->
   </div>
 </template>
 
