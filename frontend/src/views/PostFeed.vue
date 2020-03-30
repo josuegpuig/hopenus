@@ -68,7 +68,6 @@ export default {
         body: this.user_comment
       })
       .then(res => {
-        console.log(res.data);
         this.comments = [...this.comments, {
           body: this.user_comment,
           user_information: {
@@ -91,7 +90,6 @@ export default {
         id: params.id
       })
       .then(res => {
-        console.log(res.data);
         this.post = { ...res.data.post };
       });
     this.$axios
@@ -99,11 +97,9 @@ export default {
         post_id: params.id
       })
       .then(res => {
-        console.log(res.data);
         this.comments = [...res.data.comments];
       });
     this.$axios.get("http://localhost:8000/api/auth/user").then(res => {
-      console.log(res.data);
       this.actual_user = { ...res.data.user };
     });
   }

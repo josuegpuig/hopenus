@@ -44,7 +44,6 @@ export default {
         main_category: category
       })
       .then(res => {
-        console.log(res.data);
         this.posts = [...res.data.posts];
         this.loaded = true;
       });

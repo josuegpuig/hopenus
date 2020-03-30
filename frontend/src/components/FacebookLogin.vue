@@ -30,7 +30,6 @@
       handleLogin(res) {
         if (res === 'connected') {
           this.FB.api('/me', { fields: 'id, first_name, last_name, email, picture.type(large)' }, res => {
-            console.log(res);
             this.$axios.post('http://localhost:8000/api/auth/login-oauth', {
               first_name: res.first_name,
               last_name: res.last_name,

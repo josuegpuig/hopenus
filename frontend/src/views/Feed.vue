@@ -1,8 +1,8 @@
 <template>
   <section>
     <b-nav tabs>
-      <b-nav-item @click="changeCategory(1)">Solicitudes</b-nav-item>
-      <b-nav-item @click="changeCategory(2)">Ofertas</b-nav-item>
+      <b-nav-item @click="changeCategory(1)">Requests</b-nav-item>
+      <b-nav-item @click="changeCategory(2)">Offers</b-nav-item>
       <b-nav-item @click="changeCategory(3)">General</b-nav-item>
     </b-nav>
     <b-card v-if="loggedIn" bg-variant="light">
@@ -50,7 +50,6 @@ export default {
         sub_category: 0
       })
       .then(res => {
-        console.log(res.data);
         this.new_posts = [...this.new_posts, {
           body: this.user_post,
           user_information: {
@@ -65,8 +64,6 @@ export default {
   },
   beforeMount() {
     this.$axios.get("http://localhost:8000/api/auth/user").then(res => {
-      console.log(res);
-      console.log(res.data);
       this.actual_user = { ...res.data.user };
     });
   },

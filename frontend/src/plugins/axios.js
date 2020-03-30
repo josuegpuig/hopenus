@@ -60,7 +60,6 @@ _axios.interceptors.response.use(
     // Do something with response error
     const originalRequest = error.config;
     let item = localStorage.getItem('token');
-    console.log(error);
 
     if (error.response.status === 400 && error.response.data.error == 'Unauthorized' && !originalRequest._retry && item) {
       if (isRefreshing) {
@@ -83,7 +82,6 @@ _axios.interceptors.response.use(
       if (new Date(expiration) < new Date()) {
         //return new Promise(function (resolve, reject) {
           return _axios.get('http://localhost:8000/api/auth/refresh').then(response => {
-            console.log(response);
             let token = response.data;
             let expiration = new Date();
             expiration.setSeconds(expiration.getSeconds() + token.expires_in);
@@ -94,7 +92,6 @@ _axios.interceptors.response.use(
             localStorage.setItem('token', JSON.stringify(token_data));
             error.config.headers.authorization = `Bearer ${token_data.access_token}`;
             processQueue(null, token_data.access_token);
-            console.log(error.config)
             //resolve(_axios(error.config));
             return _axios(error.config);
           }).catch(err => {

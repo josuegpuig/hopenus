@@ -32,7 +32,6 @@ export default {
         "https://newsapi.org/v2/top-headlines?country=mx&q=coronavirus&pageSize=100&apiKey=7531deb4465d4cb4a8a5a0d4c63f4269"
       )
       .then(res => {
-        console.log(res.data);
         this.news = [...res.data.articles];
         this.news.sort((a,b) => new Date(a.publishedAt) - new Date(b.publishedAt))
       });
