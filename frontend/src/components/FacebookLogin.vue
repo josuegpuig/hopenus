@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-facebook-login app-id="223948805642359" v-model="model" @sdk-init="handleSdkInit" @login="handleLogin"/>
-    <button v-if="scope.logout && model.connected" @click="scope.logout">
+    <v-facebook-login app-id="223948805642359" v-model="model_login" @sdk-init="handleSdkInit" @login="handleLogin"/>
+    <button v-if="scope.logout && model_login.connected" @click="scope.logout">
       Logout
     </button>
   </div>
@@ -9,6 +9,7 @@
 
 <script>
   import VFacebookLogin from 'vue-facebook-login-component';
+  //import { mapState } from 'vuex';
 
   export default {
     components: {
@@ -23,6 +24,8 @@
       handleSdkInit({ FB, scope }) {
         this.FB = FB
         this.scope = scope
+        this.$store.commit('setScope', this.scope)
+        //this.$store.commit('setModel', this.model)
       },
       handleLogin(res) {
         if (res === 'connected') {
@@ -46,6 +49,16 @@
               localStorage.setItem('token', JSON.stringify(token_data));
             })
           })
+        }
+      }
+    },
+    computed: {
+      model_login: {
+        set(model) {
+          this.$store.commit('setModel', model)
+        },
+        get() {
+          return this.$store.state.model_login;
         }
       }
     }

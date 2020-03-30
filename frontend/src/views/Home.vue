@@ -1,26 +1,25 @@
 <template>
   <div>
-    <img alt="Vue logo" src="../assets/logo.png">
+    <img alt="Vue logo" src="../assets/logo.png" />
     <p>{{ $t('message') }}</p>
     <FacebookLogin />
-    <NewsCard />
-    <Post />
+    <b-nav tabs>
+      <b-nav-item><router-link :to="{ name: 'Home' }" class="card-link">News</router-link></b-nav-item>
+      <b-nav-item><router-link to="posts" class="card-link">Posts</router-link></b-nav-item>
+    </b-nav>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import FacebookLogin from '../components/FacebookLogin'
-import NewsCard from '../components/NewsCard'
-import Post from '../components/Post'
+import FacebookLogin from "../components/FacebookLogin";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     FacebookLogin,
-    NewsCard,
-    Post
   }
-}
+};
 </script>
 
 <style>

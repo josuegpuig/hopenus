@@ -6,10 +6,20 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     logged_in: false,
+    scope_login: null,
+    model_login: {},
+  },
+  getters: {
+    loggedIn (state) {
+      return state.model_login.connected;
+    }
   },
   mutations: {
-    loginState (state) {
-      state.logged_in = !state.logged_in;
+    setScope(state, scope) {
+      state.scope_login = scope;
+    },
+    setModel(state, model) {
+      state.model_login = model;
     }
   },
   actions: {

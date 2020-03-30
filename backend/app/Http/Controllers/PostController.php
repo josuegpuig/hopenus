@@ -66,7 +66,7 @@ class PostController extends Controller
             ], 422);
         }
    
-        $posts = Post::where('main_category',$request->main_category)->get();
+        $posts = Post::where('main_category',$request->main_category)->orderBy('created_at', 'desc')->get();
 
         if ($posts->count() > 0) {
             $posts->map(function ($post) {
@@ -78,7 +78,10 @@ class PostController extends Controller
                     'picture'  => $post->user->picture,
                 ];
                 $post->user_information = $user_information;
+                $comments_count = $post->comments->count();
+                $post->comments_count = $comments_count;
                 unset($post->user);
+                unset($post->comments);
             });
         };
 

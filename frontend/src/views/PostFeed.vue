@@ -29,7 +29,7 @@
       </b-row>
     </b-card>
 
-    <b-card bg-variant="light">
+    <b-card v-if="loggedIn" bg-variant="light">
       <b-container fluid>
         <b-row>
           <b-col>
@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
@@ -78,6 +80,9 @@ export default {
         this.user_comment = '';
       });
     }
+  },
+  computed: {
+    ...mapGetters(['loggedIn'])
   },
   beforeMount() {
     let params = this.$route.params;

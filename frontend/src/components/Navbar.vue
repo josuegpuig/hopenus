@@ -23,13 +23,14 @@
             <b-dropdown-item v-for="(lang, i) in langs" :key="`Lang${i}`" :value="lang" href="#" @click="handleLocale(lang)">{{ lang }}</b-dropdown-item>
           </b-nav-item-dropdown>
 
+          <FacebookLogin v-show="false" />
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
               <em>User</em>
             </template>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+            <b-dropdown-item v-if="loggedIn" @click="handleLogout">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -39,9 +40,14 @@
 
 <script>
 import i18n from '../i18n'
+import FacebookLogin from "../components/FacebookLogin";
+import { mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'Navbar',
+  components: {
+    FacebookLogin,
+  },
   data () {
     return { langs: ['en', 'es'] }
   },
@@ -59,7 +65,14 @@ export default {
           console.log(error.message);
         },
       )   
+    },
+    handleLogout() {
+      this.scope_login.logout();
     }
-  }
+  },
+  computed: {
+    ...mapState(['scope_login']),
+    ...mapGetters(['loggedIn'])
+  },
 }
 </script>
