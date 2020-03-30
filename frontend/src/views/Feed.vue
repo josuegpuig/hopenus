@@ -49,7 +49,7 @@ export default {
         main_category: this.category,
         sub_category: 0
       })
-      .then(res => {
+      .then(() => {
         this.new_posts = [...this.new_posts, {
           body: this.user_post,
           user_information: {

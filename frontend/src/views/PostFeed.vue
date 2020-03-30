@@ -67,7 +67,7 @@ export default {
         post_id: params.id,
         body: this.user_comment
       })
-      .then(res => {
+      .then(() => {
         this.comments = [...this.comments, {
           body: this.user_comment,
           user_information: {

@@ -68,7 +68,7 @@ export default {
     handleLogout() {
       this.$axios
       .post("http://localhost:8000/api/auth/logout")
-      .then(res => {
+      .then(() => {
         this.scope_login.logout();
         localStorage.removeItem('token');
       });
