@@ -35,6 +35,11 @@ const routes = [
     name: 'Feed',
     component: () => import(/* webpackChunkName: "feed" */ '../views/Feed.vue'),
   },
+  {
+    path: '/search',
+    name: 'Search',
+    component: () => import(/* webpackChunkName: "search" */ '../views/Search.vue'),
+  },
 ]
 
 const router = new VueRouter({

@@ -51,3 +51,5 @@ Route::prefix('post')->group(function () {
         Route::post('comments_post', 'CommentController@commentByPost');
     });
 });
+
+Route::post('search', 'SearchController@search');
