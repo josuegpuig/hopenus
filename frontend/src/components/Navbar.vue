@@ -67,7 +67,13 @@ export default {
       )   
     },
     handleLogout() {
-      this.scope_login.logout();
+      this.$axios
+      .post("http://localhost:8000/api/auth/logout")
+      .then(res => {
+        console.log(res.data);
+        this.scope_login.logout();
+        localStorage.removeItem('token');
+      });
     }
   },
   computed: {

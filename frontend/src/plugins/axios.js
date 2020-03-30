@@ -35,8 +35,12 @@ const processQueue = (error, token = null) => {
 _axios.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    let token = JSON.parse(localStorage.getItem('token')).access_token;
-    config.headers.authorization = `Bearer ${token}`;
+    let item = localStorage.getItem('token');
+    if (item) {
+      let token = JSON.parse(localStorage.getItem('token')).access_token;
+      config.headers.authorization = `Bearer ${token}`;
+    }
+    
     return config;
   },
   function (error) {
@@ -52,10 +56,13 @@ _axios.interceptors.response.use(
     return response;
   },
   function (error) {
+    // TODO: check interceptor logic
     // Do something with response error
     const originalRequest = error.config;
+    let item = localStorage.getItem('token');
+    console.log(error);
 
-    if (error.response.status === 400 && error.response.data.error == 'Unauthorized' && !originalRequest._retry) {
+    if (error.response.status === 400 && error.response.data.error == 'Unauthorized' && !originalRequest._retry && item) {
       if (isRefreshing) {
         return new Promise(function (resolve, reject) {
           failedQueue.push({ resolve, reject })
@@ -74,8 +81,8 @@ _axios.interceptors.response.use(
       let expiration = token.expiration;
 
       if (new Date(expiration) < new Date()) {
-        return new Promise(function (resolve, reject) {
-          _axios.get('http://localhost:8000/api/auth/refresh').then(response => {
+        //return new Promise(function (resolve, reject) {
+          return _axios.get('http://localhost:8000/api/auth/refresh').then(response => {
             console.log(response);
             let token = response.data;
             let expiration = new Date();
@@ -87,12 +94,15 @@ _axios.interceptors.response.use(
             localStorage.setItem('token', JSON.stringify(token_data));
             error.config.headers.authorization = `Bearer ${token_data.access_token}`;
             processQueue(null, token_data.access_token);
-            resolve(_axios(error.config));
+            console.log(error.config)
+            //resolve(_axios(error.config));
+            return _axios(error.config);
           }).catch(err => {
-            reject(err);
+            processQueue(err, null);
+            //reject(err);
           })
-        })
-        .then(() => { isRefreshing = false });
+        //})
+        //.then(() => { isRefreshing = false });
 
       }
     }
