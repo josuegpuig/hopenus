@@ -16,8 +16,8 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = ['body','user_id','main_category','sub_category'];
-
+    protected $fillable = ['body','user_id','main_category','sub_category','latitude','longitude','marker_title','address'];
+    
     /**
      * The belongs to Relationship
      *

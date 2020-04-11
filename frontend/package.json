@@ -9,6 +9,7 @@
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
   },
   "dependencies": {
+    "@google/markerclusterer": "^2.0.8",
     "bootstrap-vue": "^2.9.0",
     "core-js": "^3.6.4",
     "node-sass": "^4.13.1",

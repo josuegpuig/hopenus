@@ -48,6 +48,10 @@ class PostController extends Controller
         $post->user_id = $user->id;
         $post->main_category = $request->main_category;
         $post->sub_category = $request->sub_category;
+        $post->latitude = $request->latitude ?? null;
+        $post->longitude = $request->longitude ?? null;
+        $post->marker_title = $request->marker_title ?? null;
+        $post->address = $request->address ?? null;
         $post->save();
 
         return response()->json(['status' => 'success'], 200);
@@ -120,5 +124,12 @@ class PostController extends Controller
         unset($post->user);
         unset($post->user);
         return response()->json(['status' => 'success', 'post' =>  $post], 200);
+    }
+
+    public function getLocations()
+    {
+        $posts = Post::where('latitude','!=',null)->where('longitude','!=',null)->get();
+        
+        return response()->json(['status' => 'success', 'locations' =>  $posts], 200);
     }
 }

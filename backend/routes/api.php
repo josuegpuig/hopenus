@@ -44,6 +44,7 @@ Route::prefix('post')->group(function () {
     Route::post('post_details', 'PostController@show');
 
     Route::post('comments_post', 'CommentController@commentByPost');
+    Route::get('get_locations', 'PostController@getLocations');
 
     Route::middleware('auth:api')->group(function () {
         // Create New User

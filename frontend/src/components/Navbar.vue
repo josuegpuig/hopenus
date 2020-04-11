@@ -9,6 +9,7 @@
         <b-navbar-nav>
           <router-link :to="{ name: 'Feed' }" class="nav-link">Posts</router-link>
           <router-link :to="{ name: 'Search' }" class="nav-link">Search</router-link>
+          <router-link :to="{ name: 'Map' }" class="nav-link">Map</router-link>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
