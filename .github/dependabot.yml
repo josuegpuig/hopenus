@@ -1,0 +1,89 @@
+version: 2
+updates:
+- package-ecosystem: composer
+  directory: "/backend"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: symfony/http-kernel
+    versions:
+    - 5.2.2
+    - 5.2.3
+    - 5.2.4
+    - 5.2.5
+  - dependency-name: symfony/http-client
+    versions:
+    - 5.2.2
+    - 5.2.3
+    - 5.2.4
+  - dependency-name: laravel/tinker
+    versions:
+    - 2.6.0
+  - dependency-name: laravel/framework
+    versions:
+    - 7.30.3
+  - dependency-name: phpunit/phpunit
+    versions:
+    - 8.5.14
+  - dependency-name: fruitcake/laravel-cors
+    versions:
+    - 2.0.3
+  - dependency-name: facade/ignition
+    versions:
+    - 2.4.1
+  - dependency-name: guzzlehttp/guzzle
+    versions:
+    - 7.2.0
+  - dependency-name: mockery/mockery
+    versions:
+    - 1.3.3
+- package-ecosystem: npm
+  directory: "/frontend"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: core-js
+    versions:
+    - 3.10.0
+    - 3.10.1
+    - 3.10.2
+    - 3.8.3
+    - 3.9.0
+    - 3.9.1
+  - dependency-name: vue-cli-plugin-i18n
+    versions:
+    - 1.0.1
+    - 2.0.0
+    - 2.0.1
+    - 2.0.2
+    - 2.0.3
+  - dependency-name: vue-i18n
+    versions:
+    - 8.22.4
+    - 8.23.0
+    - 8.24.0
+    - 8.24.1
+    - 8.24.2
+  - dependency-name: "@vue/cli-plugin-vuex"
+    versions:
+    - 4.5.11
+  - dependency-name: "@vue/cli-plugin-eslint"
+    versions:
+    - 4.5.11
+  - dependency-name: "@vue/cli-service"
+    versions:
+    - 4.5.11
+  - dependency-name: "@vue/cli-plugin-router"
+    versions:
+    - 4.5.11
+  - dependency-name: "@vue/cli-plugin-babel"
+    versions:
+    - 4.5.11
+  - dependency-name: lodash
+    versions:
+    - 4.17.20
+  - dependency-name: elliptic
+    versions:
+    - 6.5.3
